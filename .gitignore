@@ -1,0 +1,10 @@
+# 自测脚本生成的临时截图
+screenshot.png
+screenshot-mobile.png
+screenshot-guide.png
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+node_modules/
+*.log
