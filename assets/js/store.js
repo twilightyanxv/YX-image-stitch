@@ -240,16 +240,6 @@
       if (bg) state.canvas.bg = bg;
       store.commit();
       store.emit('canvas');
-    },
-
-    /* ---------- 整体替换（载入工程） ---------- */
-    replaceAll: function (data) {
-      state.canvas = data.canvas;
-      state.arrangement = data.arrangement || 'horizontal';
-      state.elements = data.elements || [];
-      state.selectedIds = [];
-      store.commit();
-      store.emit('elements');
     }
   });
 

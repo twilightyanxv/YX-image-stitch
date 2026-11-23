@@ -152,7 +152,7 @@ function check(name, ok, detail) {
       ctxOk: !!(App.ctx && App.dom && App.dom.canvas)
     })`);
     check('App 命名空间已建立', init.hasApp);
-    check('画布比例快捷按钮已渲染(8个)', init.presets === 8, init.presets);
+    check('画布比例快捷按钮已渲染(4个)', init.presets === 4, init.presets);
     check('画布上下文初始化成功', init.ctxOk, JSON.stringify(init));
 
     /* --- 画布预设 --- */

@@ -645,11 +645,6 @@
         store.select(store.get().elements.map(function (e) { return e.id; }));
         return;
       }
-      if (mod && ev.key.toLowerCase() === 's') {
-        ev.preventDefault();
-        App.exporter.saveProject().then(function () { App.ui.toast('工程已保存'); });
-        return;
-      }
       if (mod) return;
 
       if (ev.key === 'Delete' || ev.key === 'Backspace') {

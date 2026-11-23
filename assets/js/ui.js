@@ -12,11 +12,7 @@
     { name: '16:9', w: 1920, h: 1080 },
     { name: '9:16', w: 1080, h: 1920 },
     { name: '4:3', w: 1440, h: 1080 },
-    { name: '3:4', w: 1080, h: 1440 },
-    { name: '1:1', w: 1200, h: 1200 },
-    { name: '3:2', w: 1920, h: 1280 },
-    { name: '2:3', w: 1280, h: 1920 },
-    { name: '5:4', w: 1280, h: 1024 }
+    { name: '3:4', w: 1080, h: 1440 }
   ];
 
   var $ = function (id) { return document.getElementById(id); };
@@ -30,7 +26,7 @@
       [
         'canvas', 'canvasStage', 'viewport', 'canvasPresets', 'canvasW', 'canvasH', 'canvasBg',
         'arrangeSeg', 'arrangeColsField', 'arrangeCols', 'arrangeGap', 'applyArrange',
-        'addImages', 'addText', 'fileInput', 'projectInput', 'openProject', 'saveProject',
+        'addImages', 'addText', 'fileInput',
         'layerList', 'layerCount', 'canvasSizeLabel', 'elementCount',
         'undoBtn', 'redoBtn', 'fitBtn', 'exportBtn', 'zoomIn', 'zoomOut', 'zoomLevel',
         'inspectorEmpty', 'inspectorBody', 'imageProps', 'textProps',
@@ -329,22 +325,6 @@
       dom.fileInput.value = '';
     });
     dom.addText.addEventListener('click', function () { App.main.addTextElement(); });
-    dom.saveProject.addEventListener('click', function () {
-      App.exporter.saveProject().then(function () { ui.toast('工程已保存为 JSON 文件'); })
-        .catch(function (e) { ui.toast('保存失败：' + e.message); });
-    });
-    dom.openProject.addEventListener('click', function () { dom.projectInput.click(); });
-    dom.projectInput.addEventListener('change', function () {
-      var f = dom.projectInput.files && dom.projectInput.files[0];
-      if (!f) return;
-      App.exporter.loadProject(f).then(function (n) {
-        ui.toast('已载入 ' + n + ' 个元素');
-        App.main.fitToScreen();
-      }).catch(function (e) {
-        ui.toast('打开失败：' + e.message);
-      });
-      dom.projectInput.value = '';
-    });
   }
 
   function bindToolbar() {

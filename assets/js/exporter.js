@@ -1,5 +1,5 @@
 /* ============================================================
-   exporter.js —— 导出图片 / 保存与打开工程
+   exporter.js —— 导出图片
    ============================================================ */
 (function () {
   'use strict';
@@ -68,87 +68,6 @@
             util.download(blob, safeName(opts.filename) + '.' + (format === 'jpeg' ? 'jpg' : format));
             resolve({ w: size.w, h: size.h, size: blob.size });
           }, mime, format === 'png' ? undefined : quality);
-        });
-      });
-    },
-
-    /* 生成 dataURL（用于工程保存） */
-    toDataURL: function (src) {
-      if (!src) return Promise.resolve('');
-      if (src.indexOf('data:') === 0) return Promise.resolve(src);
-      return fetch(src).then(function (r) { return r.blob(); }).then(function (b) {
-        return new Promise(function (res) {
-          var fr = new FileReader();
-          fr.onload = function () { res(fr.result); };
-          fr.onerror = function () { res(''); };
-          fr.readAsDataURL(b);
-        });
-      }).catch(function () { return ''; });
-    },
-
-    /* 保存工程为 JSON */
-    saveProject: function () {
-      var s = App.store.get();
-      var list = s.elements.filter(function (e) { return e.type === 'image'; });
-      return Promise.all(list.map(function (el) {
-        return exporter.toDataURL(el.src).then(function (d) {
-          return { id: el.id, dataUrl: d };
-        });
-      })).then(function (map) {
-        var byId = {};
-        map.forEach(function (m) { byId[m.id] = m.dataUrl; });
-        var data = {
-          version: 1,
-          app: 'image-stitcher',
-          savedAt: new Date().toISOString(),
-          canvas: s.canvas,
-          arrangement: s.arrangement,
-          elements: s.elements.map(function (el) {
-            var o = {};
-            for (var k in el) { if (k !== 'img' && k !== 'dataUrl') o[k] = el[k]; }
-            if (el.type === 'image' && byId[el.id]) o.src = byId[el.id];
-            return o;
-          })
-        };
-        var blob = util.toBlob(JSON.stringify(data, null, 2));
-        util.download(blob, safeName('拼图工程') + '.json');
-        return true;
-      });
-    },
-
-    /* 打开工程 */
-    loadProject: function (file) {
-      return util.readAsDataURL(file).then(function (txt) {
-        var data = JSON.parse(txt);
-        if (!data || !Array.isArray(data.elements)) throw new Error('文件格式不正确');
-
-        var pending = data.elements.filter(function (el) { return el.type === 'image' && el.src; })
-          .map(function (el) {
-            return new Promise(function (res) {
-              var img = new Image();
-              img.onload = function () {
-                el.img = img;
-                el.naturalW = img.naturalWidth;
-                el.naturalH = img.naturalHeight;
-                res(el);
-              };
-              img.onerror = function () { res(el); };
-              img.src = el.src;
-            });
-          });
-
-        return Promise.all(pending).then(function () {
-          var elements = data.elements.map(function (el) {
-            var o = {};
-            for (var k in el) { if (k !== 'img') o[k] = el[k]; }
-            return o;
-          });
-          App.store.replaceAll({
-            canvas: data.canvas || { width: 1920, height: 1080, bg: '#ffffff' },
-            arrangement: data.arrangement || 'free',
-            elements: elements
-          });
-          return elements.length;
         });
       });
     }

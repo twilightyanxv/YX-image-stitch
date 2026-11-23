@@ -61,5 +61,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log('拼图工坊已启动： http://localhost:' + PORT + '/');
+  console.log('YX拼图已启动： http://localhost:' + PORT + '/');
 });
