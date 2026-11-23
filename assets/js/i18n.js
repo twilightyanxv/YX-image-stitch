@@ -72,6 +72,10 @@
   "旋转 (°)": "Rotation (°)",
   "不透明度": "Opacity",
   "图片": "Image",
+  "图片图层": "Image layer",
+  "图片 副本": "Image copy",
+  "显示": "Show",
+  "隐藏": "Hide",
   "圆角": "Corner radius",
   "填充方式": "Fill mode",
   "裁剪填充": "Crop to fill",
@@ -461,7 +465,8 @@
     { re: /^「(.+)」无法读取$/, en: '"$1" could not be read' },
     { re: /^文件$/, en: 'file' },
     { re: /^导出中…$/, en: 'Exporting...' },
-    { re: /^还没有内容，点击「添加图片」或「添加文字」。$/, en: 'Nothing here yet - click "Add images" or "Add text".' }
+    { re: /^还没有内容，点击「添加图片」或「添加文字」。$/, en: 'Nothing here yet - click "Add images" or "Add text".' },
+    { re: /^(.+) 副本$/, en: '$1 copy' }
   ];
 
   var lang = 'zh';

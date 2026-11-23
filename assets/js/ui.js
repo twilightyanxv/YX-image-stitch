@@ -41,6 +41,13 @@
         'exportQualityField', 'dropHint', 'toast', 'statusHint'
       ].forEach(function (id) { dom[id] = $(id); });
 
+      /* 语言切换后重绘动态区域（图层列表、属性面板、导出提示） */
+      document.addEventListener('i18n:change', function () {
+        ui.refreshLayers();
+        ui.refreshInspector();
+        ui.updateExportHint();
+      });
+
       buildPresets();
       bindCanvasPanel();
       bindArrangePanel();
@@ -165,20 +172,21 @@
           thumb.className = 'layer-thumb';
           if (el.type === 'image') {
             thumb.src = el.src;
-            thumb.alt = el.name || '图片图层';
+            thumb.alt = (App.i18n && App.i18n.t) ? App.i18n.t(el.name || '图片图层') : (el.name || '图片图层');
           } else {
             thumb.textContent = 'T';
           }
 
           var name = document.createElement('span');
           name.className = 'layer-name';
-          name.textContent = el.name || (el.type === 'image' ? '图片' : '文字');
+          var rawName = el.name || (el.type === 'image' ? '图片' : '文字');
+          name.textContent = (App.i18n && App.i18n.t) ? App.i18n.t(rawName) : rawName;
 
           var eye = document.createElement('button');
           eye.type = 'button';
           eye.className = 'btn btn-sm';
           eye.style.padding = '2px 6px';
-          eye.title = el.visible === false ? '显示' : '隐藏';
+          eye.title = (App.i18n && App.i18n.t) ? App.i18n.t(el.visible === false ? '显示' : '隐藏') : (el.visible === false ? '显示' : '隐藏');
           eye.textContent = el.visible === false ? '○' : '●';
           eye.addEventListener('click', function (ev) {
             ev.stopPropagation();
