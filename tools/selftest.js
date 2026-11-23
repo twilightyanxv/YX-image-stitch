@@ -385,10 +385,10 @@ function check(name, ok, detail) {
     check('html lang 为 zh-CN', seo.lang === 'zh-CN', seo.lang);
     check('所有 img 都有 alt', seo.imgNoAlt === 0, seo.imgNoAlt);
     check('首页 canonical / OG / Twitter 均指向正式域名',
-      seo.canonical.indexOf('https://stitch.yanxv.com') === 0 &&
-      seo.ogUrl.indexOf('https://stitch.yanxv.com') === 0 &&
-      seo.ogImage.indexOf('https://stitch.yanxv.com') === 0 &&
-      seo.twImage.indexOf('https://stitch.yanxv.com') === 0,
+      seo.canonical.indexOf('https://image-stitch.yanxv.com') === 0 &&
+      seo.ogUrl.indexOf('https://image-stitch.yanxv.com') === 0 &&
+      seo.ogImage.indexOf('https://image-stitch.yanxv.com') === 0 &&
+      seo.twImage.indexOf('https://image-stitch.yanxv.com') === 0,
       `${seo.canonical} | ${seo.ogUrl} | ${seo.ogImage} | ${seo.twImage}`);
     [seo.canonical, seo.ogUrl, seo.ogImage, seo.twImage].forEach(u => {
       const m = /^https?:\/\/[^/]+/.exec(u || '');
@@ -538,7 +538,7 @@ function check(name, ok, detail) {
 
     /* --- 次级页面 SEO 体检 --- */
     const PAGES = ['about.html', 'guide.html', 'faq.html', 'privacy.html', '404.html'];
-    const SITE_DOMAIN = 'https://stitch.yanxv.com';
+    const SITE_DOMAIN = 'https://image-stitch.yanxv.com';
     const cssClasses = (await (await fetch(SITE + 'assets/css/style.css')).text());
     const defined = new Set();
     (cssClasses.match(/\.[A-Za-z_][A-Za-z0-9_-]*/g) || []).forEach(c => defined.add(c.slice(1)));
@@ -632,11 +632,11 @@ function check(name, ok, detail) {
       sitemapTxt.includes('<urlset') && (sitemapTxt.match(/<loc>/g) || []).length === 5 &&
       !sitemapTxt.includes('404'), (sitemapTxt.match(/<loc>/g) || []).length + ' 个 URL');
     check('robots.txt / sitemap.xml 使用正式域名',
-      robotsTxt.includes('https://stitch.yanxv.com/sitemap.xml') &&
-      sitemapTxt.includes('https://stitch.yanxv.com/') &&
-      !sitemapTxt.includes('example.com'), 'stitch.yanxv.com');
+      robotsTxt.includes('https://image-stitch.yanxv.com/sitemap.xml') &&
+      sitemapTxt.includes('https://image-stitch.yanxv.com/') &&
+      !sitemapTxt.includes('example.com'), 'image-stitch.yanxv.com');
     check('全站域名一致（无混用）',
-      origins.size === 1 && origins.has('https://stitch.yanxv.com'),
+      origins.size === 1 && origins.has('https://image-stitch.yanxv.com'),
       [...origins].join(', ') || '(无)');
   } catch (e) {
     check('测试执行', false, e.message);

@@ -399,6 +399,12 @@
     };
   }
 
+  /* 框选过程中更新选框位置 */
+  function doMarquee(ev) {
+    drag.cur = docPoint(ev);
+    main.invalidate();
+  }
+
   function marqueeRect(d) {
     return {
       x: Math.min(d.start.x, d.cur.x),

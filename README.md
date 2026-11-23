@@ -24,7 +24,7 @@ node serve.js 8080     # 指定端口
 
 | 需求 | 实现 |
 | --- | --- |
-| 快捷设置画布大小 | 8 个比例按钮：16:9、9:16、4:3、3:4、1:1、3:2、2:3、5:4；也可手填任意宽高（64–8000 px） |
+| 快捷设置画布大小 | 4 个比例按钮：16:9、9:16、4:3、3:4；也可手填任意宽高（64–8000 px） |
 | 横向 / 纵向排列 | 「排列方式」分段控件 + 一键「应用到图片」，等比缩放不裁切、不变形 |
 | 自由拖拽图片位置 | 鼠标拖动 + 边缘/中心吸附参考线；支持多选、框选、方向键微调 |
 | 自由放大 | 八向控制点等比缩放（角点默认锁定比例，Shift 解除），顶部圆点旋转 |
@@ -36,9 +36,9 @@ node serve.js 8080     # 指定端口
 
 - **撤销 / 重做**：Ctrl+Z / Ctrl+Y（最多 100 步）
 - **导出**：PNG / JPEG / WebP，1× / 2× / 3× 倍率（2× 即 4K）
-- **工程存取**：保存为 JSON，随时打开继续编辑
 - **图层面板**：显示 / 隐藏、点击选中
-- **快捷键**：`Delete` 删除 · `Ctrl+D` 复制 · `Ctrl+A` 全选 · `Ctrl+S` 保存工程 · 滚轮缩放 · `空格 + 拖拽` 平移
+- **快捷键**：`Delete` 删除 · `Ctrl+D` 复制 · `Ctrl+A` 全选 · 滚轮缩放 · `空格 + 拖拽` 平移
+- **中英文切换**：页头「使用教程」左侧的按钮，默认跟随浏览器语言；手动切换后会写入 URL 的 `?lang=zh|en`
 
 ---
 
@@ -61,9 +61,11 @@ node serve.js 8080     # 指定端口
 │   │   ├── elements.js     元素模型、文本排版、几何与命中检测
 │   │   ├── render.js       Canvas 绘制（画布 / 选中框 / 导出共用）
 │   │   ├── arrange.js      横向 / 纵向 / 网格自动排列
-│   │   ├── exporter.js     导出图片、保存与打开工程
+│   │   ├── exporter.js     导出图片
 │   │   ├── ui.js           面板绑定、属性检视器、图层列表、导出弹窗
-│   │   └── main.js         指针交互、缩放平移、快捷键、文件拖入
+│   │   ├── main.js         指针交互、缩放平移、快捷键、文件拖入
+│   │   ├── i18n.js         中英文切换（默认跟随浏览器语言）
+│   │   └── docmodal.js     站内文档页弹窗打开（不打断画布编辑状态）
 │   └── img/                favicon / logo / og 图（由脚本生成）
 └── tools/
     ├── gen-images.js       无依赖生成 PNG 资源
@@ -87,14 +89,14 @@ node tools/selftest.js     # 启动无头 Chrome 跑 43 项端到端断言（无
 
 ## 上线前必做
 
-站点域名已设为 **https://stitch.yanxv.com** （canonical / OG / Twitter / JSON-LD / sitemap / robots 已全部同步）。
+站点域名已设为 **https://image-stitch.yanxv.com** （canonical / OG / Twitter / JSON-LD / sitemap / robots 已全部同步）。
 
-1. **配置域名解析与 HTTPS**：把 `stitch.yanxv.com` 指向部署环境，并签发证书（Let's Encrypt 即可）。
+1. **配置域名解析与 HTTPS**：把 `image-stitch.yanxv.com` 指向部署环境，并签发证书（Let's Encrypt 即可）。
 2. **替换社交卡片图**：`assets/img/og-home.png`（1200×630）为自动生成的示意图，建议换成带文案的真实产品图。
 3. **核对 JSON-LD**：结构化数据中未包含 `aggregateRating`（虚构评价会违反 Google 指南）。如后续接入真实用户评价，再按实际数据添加。
 4. **更新 `sitemap.xml` 的 `lastmod`** 与 `manifest.webmanifest` 中的站点信息。
 5. 给静态资源加长缓存（`Cache-Control: public, max-age=31536000, immutable`），HTML 设 `no-cache`。
-6. 上线后到 [Google Search Console](https://search.google.com/search-console) 与 [Bing Webmaster](https://www.bing.com/webmasters) 提交 `https://stitch.yanxv.com/sitemap.xml`。
+6. 上线后到 [Google Search Console](https://search.google.com/search-console) 与 [Bing Webmaster](https://www.bing.com/webmasters) 提交 `https://image-stitch.yanxv.com/sitemap.xml`。
 
 ---
 
@@ -106,4 +108,4 @@ Chrome / Edge / Firefox / Safari 近两年版本。移动端为单指拖动、�
 
 ## 许可
 
-代码可自由用于个人与商业项目。
+本工具仅可用于个人项目，不可用于商业项目。

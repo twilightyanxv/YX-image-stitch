@@ -8,16 +8,16 @@
 <meta name="keywords" content="图片拼接,多图拼接,图片拼接工具,长图拼接,九宫格拼图,拼图软件,在线拼图,图片排版,图片合成,图片加文字,免费拼图工具">
 <meta name="author" content="YX拼图">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<link rel="canonical" href="https://stitch.yanxv.com/">
+<link rel="canonical" href="https://image-stitch.yanxv.com/">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="YX拼图">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:url" content="https://stitch.yanxv.com/">
+<meta property="og:url" content="https://image-stitch.yanxv.com/">
 <meta property="og:title" content="图片拼接工具 - 免费在线多图拼接、排版合成高清长图">
 <meta property="og:description" content="横向、纵向、网格自由排版，拖拽缩放图片，任意位置插入文字，一键导出高清大图。全部本地处理，图片不上传。">
-<meta property="og:image" content="https://stitch.yanxv.com/assets/img/og-home.png">
+<meta property="og:image" content="https://image-stitch.yanxv.com/assets/img/og-home.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="YX拼图图片拼接工具界面预览">
@@ -26,7 +26,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="图片拼接工具 - 免费在线多图拼接、排版合成高清长图">
 <meta name="twitter:description" content="横向、纵向、网格自由排版，拖拽缩放图片，任意位置插入文字，一键导出高清大图。">
-<meta name="twitter:image" content="https://stitch.yanxv.com/assets/img/og-home.png">
+<meta name="twitter:image" content="https://image-stitch.yanxv.com/assets/img/og-home.png">
 
 <meta name="theme-color" content="#6366f1">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
@@ -41,30 +41,30 @@
   "@graph": [
     {
       "@type": "WebSite",
-      "@id": "https://stitch.yanxv.com/#website",
-      "url": "https://stitch.yanxv.com/",
+      "@id": "https://image-stitch.yanxv.com/#website",
+      "url": "https://image-stitch.yanxv.com/",
       "name": "YX拼图",
       "alternateName": "图片拼接工坊",
       "inLanguage": "zh-CN",
-      "publisher": { "@id": "https://stitch.yanxv.com/#organization" }
+      "publisher": { "@id": "https://image-stitch.yanxv.com/#organization" }
     },
     {
       "@type": "Organization",
-      "@id": "https://stitch.yanxv.com/#organization",
+      "@id": "https://image-stitch.yanxv.com/#organization",
       "name": "YX拼图",
-      "url": "https://stitch.yanxv.com/",
+      "url": "https://image-stitch.yanxv.com/",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://stitch.yanxv.com/assets/img/logo-512.png",
+        "url": "https://image-stitch.yanxv.com/assets/img/logo-512.png",
         "width": 512,
         "height": 512
       }
     },
     {
       "@type": "WebApplication",
-      "@id": "https://stitch.yanxv.com/#app",
+      "@id": "https://image-stitch.yanxv.com/#app",
       "name": "在线图片拼接工具",
-      "url": "https://stitch.yanxv.com/",
+      "url": "https://image-stitch.yanxv.com/",
       "description": "浏览器内运行的免费图片拼接工具，支持横向/纵向/网格排列、自由拖拽缩放、插入文字并导出高清图片。",
       "applicationCategory": "MultimediaApplication",
       "applicationSubCategory": "Image Editor",
@@ -87,7 +87,7 @@
     },
     {
       "@type": "FAQPage",
-      "@id": "https://stitch.yanxv.com/#faq",
+      "@id": "https://image-stitch.yanxv.com/#faq",
       "mainEntity": [
         {
           "@type": "Question",
@@ -123,10 +123,10 @@
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://stitch.yanxv.com/#breadcrumb",
+      "@id": "https://image-stitch.yanxv.com/#breadcrumb",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://stitch.yanxv.com/" },
-        { "@type": "ListItem", "position": 2, "name": "图片拼接工具", "item": "https://stitch.yanxv.com/#tool" }
+        { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://image-stitch.yanxv.com/" },
+        { "@type": "ListItem", "position": 2, "name": "图片拼接工具", "item": "https://image-stitch.yanxv.com/#tool" }
       ]
     }
   ]
@@ -150,6 +150,7 @@
       <span class="brand-text">YX拼图<em>完全免费，自由排版，纯本地处理</em></span>
     </a>
     <nav class="site-nav" aria-label="主导航">
+      <button type="button" class="lang-switch" id="langSwitch" aria-label="Switch to English" title="Switch to English">EN</button>
       <a href="/guide.html">使用教程</a>
       <a href="/faq.html">常见问题</a>
       <a href="/about.html">关于工具</a>
@@ -258,8 +259,13 @@
       </section>
 
       <!-- 右侧属性面板 -->
-      <aside class="panel panel-right" aria-label="属性面板">
-        <div class="panel-scroll">
+      <aside class="panel panel-right" id="inspectorPanel" aria-label="属性面板">
+        <div class="panel-head">
+          <h2 class="panel-title">属性</h2>
+          <button type="button" class="btn btn-sm panel-toggle" id="toggleInspector"
+                  aria-expanded="true" aria-controls="inspectorContent" title="收起属性面板">›</button>
+        </div>
+        <div class="panel-scroll" id="inspectorContent">
           <div class="empty-state" id="inspectorEmpty">
             <strong>未选中元素</strong>
             <small>点击画布上的图片或文字即可编辑属性</small>
@@ -567,6 +573,17 @@
   </div>
 </footer>
 
+<!-- 文档弹窗（使用教程 / 常见问题 / 关于工具） -->
+<div class="modal" id="docModal" hidden role="dialog" aria-modal="true" aria-labelledby="docModalTitle">
+  <div class="modal-card modal-card-doc">
+    <div class="modal-head">
+      <h2 id="docModalTitle">文档</h2>
+      <button type="button" class="btn btn-sm" id="docModalClose" aria-label="关闭">✕</button>
+    </div>
+    <div class="modal-body doc-modal-body" id="docModalBody"></div>
+  </div>
+</div>
+
 <!-- 导出弹窗 -->
 <div class="modal" id="exportModal" hidden role="dialog" aria-modal="true" aria-labelledby="exportTitle">
   <div class="modal-card">
@@ -617,5 +634,7 @@
 <script src="/assets/js/exporter.js"></script>
 <script src="/assets/js/ui.js"></script>
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/i18n.js"></script>
+<script src="/assets/js/docmodal.js"></script>
 </body>
 </html>

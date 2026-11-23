@@ -30,6 +30,7 @@
         'layerList', 'layerCount', 'canvasSizeLabel', 'elementCount',
         'undoBtn', 'redoBtn', 'fitBtn', 'exportBtn', 'zoomIn', 'zoomOut', 'zoomLevel',
         'inspectorEmpty', 'inspectorBody', 'imageProps', 'textProps',
+        'inspectorPanel', 'toggleInspector',
         'propX', 'propY', 'propW', 'propH', 'propRot', 'propOpacity', 'propOpacityVal',
         'propRadius', 'propRadiusVal', 'propFit', 'replaceImage', 'replaceInput', 'resetCrop',
         'propText', 'propFontSize', 'propColor', 'propFontFamily', 'propFontWeight',
@@ -45,6 +46,7 @@
       bindArrangePanel();
       bindAddPanel();
       bindInspector();
+      bindInspectorToggle();
       bindToolbar();
       bindExportModal();
 
@@ -74,7 +76,7 @@
       if (document.activeElement !== dom.canvasH) dom.canvasH.value = s.canvas.height;
       if (document.activeElement !== dom.canvasBg) dom.canvasBg.value = toHex(s.canvas.bg);
       dom.canvasSizeLabel.textContent = s.canvas.width + ' × ' + s.canvas.height;
-      dom.elementCount.textContent = s.elements.length + ' 个元素';
+      dom.elementCount.textContent = (App.i18n && App.i18n.t) ? App.i18n.t(s.elements.length + ' 个元素') : s.elements.length + ' 个元素';
 
       var btns = dom.canvasPresets.querySelectorAll('.preset');
       for (var i = 0; i < btns.length; i++) {
@@ -142,12 +144,12 @@
       var list = dom.layerList;
       if (!list) return;
       list.innerHTML = '';
-      dom.layerCount.textContent = s.elements.length ? s.elements.length + ' 项' : '';
+      dom.layerCount.textContent = s.elements.length ? ((App.i18n && App.i18n.t) ? App.i18n.t(s.elements.length + ' 项') : s.elements.length + ' 项') : '';
 
       if (!s.elements.length) {
         var empty = document.createElement('div');
         empty.className = 'layer-empty';
-        empty.textContent = '还没有内容，点击「添加图片」或「添加文字」。';
+        empty.textContent = (App.i18n && App.i18n.t) ? App.i18n.t('还没有内容，点击「添加图片」或「添加文字」。') : '还没有内容，点击「添加图片」或「添加文字」。';
         list.appendChild(empty);
         return;
       }
@@ -211,7 +213,7 @@
     /* ---------- 提示 ---------- */
     toast: function (msg, ms) {
       if (!dom.toast) return;
-      dom.toast.textContent = msg;
+      dom.toast.textContent = (App.i18n && App.i18n.t) ? App.i18n.t(msg) : msg;
       dom.toast.hidden = false;
       clearTimeout(toastTimer);
       toastTimer = setTimeout(function () { dom.toast.hidden = true; }, ms || 2400);
@@ -239,7 +241,7 @@
       var fmt = dom.exportFormat.value;
       dom.exportQualityField.hidden = fmt === 'png';
       dom.exportQualityVal.textContent = dom.exportQuality.value + '%';
-      dom.exportSizeHint.textContent = '输出尺寸：' + size.w + ' × ' + size.h + ' px' +
+      dom.exportSizeHint.textContent = (App.i18n && App.i18n.t ? App.i18n.t('输出尺寸：' + size.w + ' × ' + size.h + ' px') : '输出尺寸：' + size.w + ' × ' + size.h + ' px') +
         (size.clipped ? '（已受浏览器尺寸上限限制）' : '');
     }
   });
@@ -325,6 +327,25 @@
       dom.fileInput.value = '';
     });
     dom.addText.addEventListener('click', function () { App.main.addTextElement(); });
+  }
+
+  /* 属性面板展开 / 收起 */
+  function bindInspectorToggle() {
+    var btn = dom.toggleInspector;
+    var panel = dom.inspectorPanel;
+    var app = $('app');
+    if (!btn || !panel || !app) return;
+
+    function setCollapsed(on) {
+      app.classList.toggle('inspector-collapsed', on);
+      btn.setAttribute('aria-expanded', on ? 'false' : 'true');
+      btn.title = on ? '展开属性面板' : '收起属性面板';
+      btn.textContent = on ? '‹' : '›';
+    }
+
+    btn.addEventListener('click', function () {
+      setCollapsed(!app.classList.contains('inspector-collapsed'));
+    });
   }
 
   function bindToolbar() {
